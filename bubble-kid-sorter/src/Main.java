@@ -3,11 +3,12 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main {
-	private static ArrayList<Double> changes;
+	private static ArrayList<Double> changes= new ArrayList<Double>();
 
 
 	public static void main(String[] args) throws IOException {
@@ -17,15 +18,43 @@ public class Main {
 		int rows= Integer.parseInt(br.readLine());
 		String outP="";
 		for(int i=0;i<rows;i++) {
+			changes.clear();
 			String lines=br.readLine();
 			double[] kidRowN=separate(lines);
 			bubbleSort(kidRowN);
-			String[] kidSorter=returnToString(kidRowN);
+			String kidSorter=returnToString(kidRowN);
 			change = amountChanges();
 			
+			change=change/(kidRowN.length-1);
+			outP+=roundOut(change)+"-"+kidSorter;
+			outP=outP.substring(0,outP.length() - 1);
+			outP+="\n";
+			
 		}
+		bw.write(outP);
 		br.close();
 		bw.close();
+	}
+	
+	public static String roundOut(double a) {
+		DecimalFormat df = new DecimalFormat("##.##");
+		df.format(a);
+		String b="";
+		if((a-((int) a))==0){
+			/*DecimalFormat df2 = new DecimalFormat("##.#");
+			b=df2.format(a);*/
+			b=String.format("%.1f", a);
+		}
+		else if((a-((int) a))>0.1) {
+			DecimalFormat df2 = new DecimalFormat("##.#");
+			b=df2.format(a);
+		}
+		else {
+			DecimalFormat df2 = new DecimalFormat("##.##");
+			b=df2.format(a);
+		}
+		return b;
+		 
 	}
 	
 	public static double[] separate(String a) {
@@ -42,26 +71,26 @@ public class Main {
 	public static void bubbleSort(double[] array) {
 	double mChange=0;
 	for(int i=1; i<array.length;i++) {
-
+		 mChange=0;
 		for(int j=0;j<array.length-i;j++) {
 			if(array[j]>array[j+1]) {
 				double temp = array[j];
 				array[j] = array[j+1];
 				array[j+1] = temp;
+
 				mChange++;
 			}
 		}
 		changes.add(mChange);
-		System.out.println(changes);
-		System.out.println(Arrays.toString(array));
+	
 	}
 	
 }
 	
-	public static String[] returnToString(double[] a) {
-		String[] b=new String[a.length];
-	for(int i=0;i<b.length;i++) {
-		b[i]=a[i]+"";
+	public static String returnToString(double[] a) {
+		String b="";//new String[a.length];
+	for(int i=0;i<a.length;i++) {
+		b+=a[i]+" ";
 	}
 	return b;
 	}
