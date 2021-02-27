@@ -36,24 +36,30 @@ public class Main {
 		bw.close();
 	}
 	
-	public static String roundOut(double a) {
+	public static double roundOut(double a) {
 		DecimalFormat df = new DecimalFormat("##.##");
+		String c=a+"";
 		df.format(a);
-		String b="";
+		double b=a;
 		if((a-((int) a))==0){
 			/*DecimalFormat df2 = new DecimalFormat("##.#");
-			b=df2.format(a);*/
-			b=String.format("%.1f", a);
+			b=df2.format(a);
+			b=String.format("%.2f", c);*/
+			 b=((long)(b* 1e2)) / 1e2;
 		}
 		else if((a-((int) a))>0.1) {
-			DecimalFormat df2 = new DecimalFormat("##.#");
+			/*DecimalFormat df2 = new DecimalFormat("##.#");
 			b=df2.format(a);
+			b=String.format("%.2f", c);*/
+			  b=((long)(b* 1e2)) / 1e2;
 		}
 		else {
-			DecimalFormat df2 = new DecimalFormat("##.##");
+			/*DecimalFormat df2 = new DecimalFormat("##.##");
 			b=df2.format(a);
+			b=String.format("%.3f", c);*/
+			 b=((long)(b * 1e2)) / 1e2;
 		}
-		return b;
+	return b;
 		 
 	}
 	
